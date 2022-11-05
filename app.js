@@ -27,6 +27,19 @@ app.get('/restaurants/:id', (req, res) => {
   res.render('show',{restaurant: restaurant})
 })
 
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  const resultOfName = data.results.filter(result => {
+    return result.name.includes(req.query.keyword)
+  })
+  const resultOfCategory = data.results.filter(result => {
+    return result.category.includes(req.query.keyword)
+  })
+  const results = resultOfName.concat(resultOfCategory)
+  
+  res.render('index', {restaurants: results,keyword: keyword})
+})
+
 // listen on server 
 app.listen(port,() => {
   console.log(`listen on port: ${port}`)  
