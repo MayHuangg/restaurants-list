@@ -37,6 +37,15 @@ app.get('/search', (req, res) => {
   })
   const results = resultOfName.concat(resultOfCategory)
   
+  // 若使用者如果沒有在搜尋欄輸入內容或只有輸入空格
+  // function check (str) {
+  //   let textInSearchBar = str.trim()
+  //   if (textInSearchBar.length < 1) {
+  //     alert('請輸入內容')
+  //   }
+  // }
+  // check(keyword)
+  
   res.render('index', {restaurants: results,keyword: keyword})
 })
 
