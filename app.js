@@ -16,7 +16,7 @@ const data = require('./restaurant-data.json')
 app.use(express.static('public'))
 
 // set routing
-app.get('/restaurants', (req, res) => {
+app.get('/', (req, res) => {
   res.render('index', { restaurants: data.results })
 })
 
