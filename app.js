@@ -24,7 +24,7 @@ app.get('/restaurants/:id', (req, res) => {
   const restaurant = data.results.find(result => {
     return result.id.toString() === req.params.id
   })
-  res.render('show', { restaurant: restaurant })
+  res.render('show', { restaurant })
 })
 
 app.get('/search', (req, res) => {
@@ -32,7 +32,7 @@ app.get('/search', (req, res) => {
   const results = data.results.filter(result => {
     return result.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || result.category.toLowerCase().includes(req.query.keyword.toLowerCase())
   })
-  
+
   // 若使用者如果沒有在搜尋欄輸入內容或只有輸入空格
   // function check (str) {
   //   let textInSearchBar = str.trim()
@@ -42,7 +42,7 @@ app.get('/search', (req, res) => {
   // }
   // check(keyword)
 
-  res.render('index', { restaurants: results, keyword: keyword })
+  res.render('index', { restaurants: results, keyword })
 })
 
 // listen on server
