@@ -29,14 +29,9 @@ app.get('/restaurants/:id', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const resultOfName = data.results.filter(result => {
-    return result.name.toLowerCase().includes(req.query.keyword.toLowerCase())
+  const results = data.results.filter(result => {
+    return result.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || result.category.toLowerCase().includes(req.query.keyword.toLowerCase())
   })
-  const resultOfCategory = data.results.filter(result => {
-    return result.category.toLowerCase().includes(req.query.keyword.toLowerCase())
-  })
-  const results = resultOfName.concat(resultOfCategory)
-  
   
   // 若使用者如果沒有在搜尋欄輸入內容或只有輸入空格
   // function check (str) {
