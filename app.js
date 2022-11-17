@@ -7,6 +7,9 @@ if(process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+// require restaurant data 
+const Restaurant = require('./models/restaurant')
+
 // set templete engine
 const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -14,21 +17,24 @@ app.set('view engine', 'handlebars')
 
 // define variables
 const port = 3000
-const data = require('./restaurant-data.json')
 
 // set static files
 app.use(express.static('public'))
 
-// set routing
+// set routing for index page
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: data.results })
+  return Restaurant.find()
+  .lean()
+  .then(restaurants => res.render('index', { restaurants }))
+  .catch(error => {console.log(error)})
 })
 
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = data.results.find(result => {
-    return result.id.toString() === req.params.id
-  })
-  res.render('show', { restaurant })
+  const id = req.params.id
+  return Restaurant.findById(id)
+  .lean()
+  .then(restaurant => {res.render('show', { restaurant })})
+  .catch(error => {console.log(error)})
 })
 
 app.get('/search', (req, res) => {
