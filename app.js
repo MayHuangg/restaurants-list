@@ -38,12 +38,15 @@ app.get('/restaurants/:id', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const results = data.results.filter(result => {
-    return result.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || result.category.toLowerCase().includes(req.query.keyword.toLowerCase())
+  const keyword = req.query.keyword.toLowerCase()
+  Restaurant.find()
+  .lean()
+  .then(restaurants => {
+    const filterData = restaurants.filter(result => {
+    return result.name.toLowerCase().includes(keyword) || result.category.toLowerCase().includes(keyword)
+    })
+    res.render('index', { restaurants: filterData, keyword })
   })
-
-  res.render('index', { restaurants: results, keyword })
 })
 
 // listen on server
