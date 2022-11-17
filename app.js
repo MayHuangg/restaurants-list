@@ -2,10 +2,14 @@
 const express = require('express')
 const app = express()
 
+// require dontenv 
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 // set templete engine
 const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-// 這句是一定要的，但我不知道它的作用到底是甚麼。單看doc的話感覺有點像是在define。
 app.set('view engine', 'handlebars')
 
 // define variables
@@ -33,19 +37,22 @@ app.get('/search', (req, res) => {
     return result.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || result.category.toLowerCase().includes(req.query.keyword.toLowerCase())
   })
 
-  // 若使用者如果沒有在搜尋欄輸入內容或只有輸入空格
-  // function check (str) {
-  //   let textInSearchBar = str.trim()
-  //   if (textInSearchBar.length < 1) {
-  //     alert('請輸入內容')
-  //   }
-  // }
-  // check(keyword)
-
   res.render('index', { restaurants: results, keyword })
 })
 
 // listen on server
 app.listen(port, () => {
   console.log(`listen on port: ${port}`)
+})
+
+// connect to db 
+const mongoose = require('mongoose')
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+const db = mongoose.connection
+db.on('error', ()=> {
+  console.log('mongodb error')
+})
+db.once('open', ()=>{
+  console.log('mongodb connect')
 })
