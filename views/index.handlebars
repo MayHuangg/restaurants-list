@@ -55,8 +55,15 @@
                 </span>
               </div>
               <div class="card-footer d-flex justify-content-end">
-                <a href="./{{this._id}}/edit">Edit</a>
-                <a href="/restaurants/{{this._id}}">Detail</a>
+                <a href="./{{this._id}}/edit">
+                  <button>Edit</button>
+                </a>
+                <a href="/restaurants/{{this._id}}">
+                  <button>Detail</button>
+                </a>
+                <form action="/{{this._id}}/delete" method="POST" display="inline-block">
+                  <button type="submit">Delete</button>
+                </form>
               </div>
             </div>
           </div>

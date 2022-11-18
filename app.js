@@ -72,7 +72,7 @@ app.get('/new', (req, res) => {
   res.render('new')
 })
 
-// set routing for catching data
+// set routing for catch data
 const bodyParser = require('body-parser')
 const restaurant = require('./models/restaurant')
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -125,5 +125,14 @@ app.post('/:id/edit', (req, res) => {
       return restaurant.save()
     })
     .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
+
+// set routing for delete 
+app.post('/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
