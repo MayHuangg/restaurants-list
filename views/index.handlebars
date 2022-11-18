@@ -38,10 +38,10 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
         {{#each restaurants}}
-          <a href="/restaurants/{{this._id}}" class="text-secondary">
+          <div>
             <div class="card mb-3">
               <img class="card-img-top" src="{{this.image}}"
-                alt="Sababa 沙巴巴中東美食">
+                alt="{{this.name}}">
               <div class="card-body p-3">
                 <h6 class="card-title mb-1">{{this.name}}</h6>
 
@@ -53,10 +53,13 @@
                   {{this.rating}}
                   <i class="fas fa-star fa-xs"></i>
                 </span>
-
+              </div>
+              <div class="card-footer d-flex justify-content-end">
+                <a href="./{{this._id}}/edit">Edit</a>
+                <a href="/restaurants/{{this._id}}">Detail</a>
               </div>
             </div>
-          </a>
+          </div>
         {{/each}}
       </div>
     </div>

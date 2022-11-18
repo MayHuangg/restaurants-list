@@ -82,6 +82,13 @@ a {
   text-decoration: none;
 }
 
+.card-footer a {
+  border: 1px gray solid;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
+}
+
 @media screen and (max-width: 992px) {
 
   .card img {

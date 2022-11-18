@@ -74,6 +74,7 @@ app.get('/new', (req, res) => {
 
 // set routing for catching data
 const bodyParser = require('body-parser')
+const restaurant = require('./models/restaurant')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.post('/restaurants', (req, res) => {
   const name = req.body.name
@@ -88,4 +89,41 @@ app.post('/restaurants', (req, res) => {
   return Restaurant.create({ name, name_en, category, image, location, phone, google_map, rating, description})
   .then(() => { res.redirect('/') })
   .catch(error => console.log(error))
+})
+
+// set routing for edit page
+app.get('/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+  .lean()
+  .then(restaurant => res.render('edit', { restaurant }))
+  .catch(error => console.log(error))
+})
+
+app.post('/:id/edit', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const google_map = req.body.google_map
+  const rating = req.body.rating
+  const description = req.body.description
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = name
+      restaurant.name_en = name_en
+      restaurant.category = category
+      restaurant.image = image
+      restaurant.location = location
+      restaurant.phone = phone
+      restaurant.google_map = google_map
+      restaurant.rating = rating
+      restaurant.description = description
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
 })
