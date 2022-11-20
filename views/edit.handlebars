@@ -1,5 +1,5 @@
 <div class="w-75 mx-auto">
-  <form action="/{{restaurant._id}}/edit" method="POST">
+  <form action="/restaurants/{{restaurant._id}}?_method=PUT" method="POST">
 
     <label for="name" class="form-label">餐廳名稱(中文)</label>
     <input id="name" type="text" name="name" class="form-control" value="{{restaurant.name}}" required>

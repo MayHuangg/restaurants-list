@@ -13,21 +13,34 @@
 
   <div class="banner"></div>
 </header>
-
-<!-- search bar -->
-<div class="container search-bar">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+<div class="container">
+  <div class="row mt-2">
+    <!-- search bar -->
+    <div class="container search-bar col-5">
+      <div class="search-bar-inner">
+        <form action="/search">
+          <div class="input-group">
+            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+              value="{{keyword}}" aria-describedby="search-button">
+            <div class="input-group-append">
+              <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>    
+    </div>
+
+    <!-- dropdown box for sort  -->
+    <div class="dropdown col-5">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        餐廳排序
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">A->Z</a></li>
+        <li><a class="dropdown-item" href="#">Z->A</a></li>
+        <li><a class="dropdown-item" href="#">類別</a></li>
+        <li><a class="dropdown-item" href="#">地區</a></li>
+      </ul>
     </div>
   </div>
 </div>
@@ -55,13 +68,13 @@
                 </span>
               </div>
               <div class="card-footer d-flex justify-content-end">
-                <a href="./{{this._id}}/edit">
+                <a href="/restaurants/{{this._id}}/edit">
                   <button>Edit</button>
                 </a>
                 <a href="/restaurants/{{this._id}}">
                   <button>Detail</button>
                 </a>
-                <form action="/{{this._id}}/delete" method="POST" display="inline-block">
+                <form action="/restaurants/{{this._id}}?method=DELETE" method="POST" display="inline-block">
                   <button type="submit">Delete</button>
                 </form>
               </div>

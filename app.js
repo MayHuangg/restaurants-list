@@ -7,6 +7,10 @@ if(process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+// require method-override 
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+
 // connect to db 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -92,7 +96,7 @@ app.post('/restaurants', (req, res) => {
 })
 
 // set routing for edit page
-app.get('/:id/edit', (req, res) => {
+app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
   .lean()
@@ -100,7 +104,7 @@ app.get('/:id/edit', (req, res) => {
   .catch(error => console.log(error))
 })
 
-app.post('/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const name = req.body.name
   const name_en = req.body.name_en
@@ -129,7 +133,7 @@ app.post('/:id/edit', (req, res) => {
 })
 
 // set routing for delete 
-app.post('/:id/delete', (req, res) => {
+app.post('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
