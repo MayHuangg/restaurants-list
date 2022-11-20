@@ -7,7 +7,7 @@
           width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
         我的餐廳清單
       </a>
-      <a href="./new">新增餐廳資料</a>
+      <a href="/restaurants/new">新增餐廳資料</a>
     </div>
   </nav>
 
@@ -74,7 +74,7 @@
                 <a href="/restaurants/{{this._id}}">
                   <button>Detail</button>
                 </a>
-                <form action="/restaurants/{{this._id}}?method=DELETE" method="POST" display="inline-block">
+                <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST" display="inline-block">
                   <button type="submit">Delete</button>
                 </form>
               </div>
