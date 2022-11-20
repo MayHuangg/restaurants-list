@@ -2,36 +2,20 @@
 const express = require('express')
 const app = express()
 
-const bodyParser = require('body-parser')
+// 需要它和db連接 
+require('./config/mongoose')
 
+// 需要它處理req 
+const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// require method-override 
+// 需要它讓client可以使用put、delete 
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
 // require routes 
 const routes = require('./routes')
 app.use(routes)
-
-// require dontenv 
-if(process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-
-
-
-// connect to db 
-const mongoose = require('mongoose')
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-db.on('error', ()=> {
-  console.log('mongodb error')
-})
-db.once('open', ()=>{
-  console.log('mongodb connect')
-})
 
 // require restaurant data 
 const Restaurant = require('./models/restaurants')
@@ -52,28 +36,18 @@ app.listen(port, () => {
 // set static files
 app.use(express.static('public'))
 
-// set routing for index page
-// app.get('/', (req, res) => {
-//   return Restaurant.find()
+// app.get('/search', (req, res) => {
+//   const keyword = req.query.keyword.toLowerCase()
+//   Restaurant.find()
 //   .lean()
-//   .then(restaurants => res.render('index', { restaurants }))
-//   .catch(error => {console.log(error)})
+//   .then(restaurants => {
+//     const filterData = restaurants.filter(result => {
+//     return result.name.toLowerCase().includes(keyword) || result.category.toLowerCase().includes(keyword)
+//     })
+//     res.render('index', { restaurants: filterData, keyword })
+//   })
+//   .catch(err => console.log(err))
 // })
-
-
-
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.toLowerCase()
-  Restaurant.find()
-  .lean()
-  .then(restaurants => {
-    const filterData = restaurants.filter(result => {
-    return result.name.toLowerCase().includes(keyword) || result.category.toLowerCase().includes(keyword)
-    })
-    res.render('index', { restaurants: filterData, keyword })
-  })
-  .catch(err => console.log(err))
-})
 
 
 

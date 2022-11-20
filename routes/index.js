@@ -9,4 +9,8 @@ router.use('/', home)
 const restaurants = require('./modules/restaurants')
 router.use('/restaurants', restaurants)
 
+// routing for search 
+const search = require('./modules/search')
+router.use('/search', search)
+
 module.exports = router
